@@ -9,3 +9,18 @@ body.opening .skip-link{display:none}
 .reduce-motion .float-photo{translate:0 0!important;will-change:auto}
 .reduce-motion .intro{transition:opacity .15s,visibility .15s}
 @media(prefers-reduced-motion:reduce){.reveal,.intro,.view-photo{transition:opacity .15s!important}.photo-card:hover img{transform:none}.float-photo{translate:0 0!important;will-change:auto}}
+
+/* Small, finite Lottie accents; the photographs remain the focus. */
+.explore .scroll-motion-wrap{position:relative;display:block;overflow:hidden}
+.explore .scroll-motion-wrap .lottie-icon{position:absolute;inset:4px 8px;width:auto;height:auto;border:0;display:block;border-radius:0}
+.explore .scroll-motion-wrap .motion-fallback{position:absolute;inset:0;width:auto;height:auto;border:0;display:grid;place-items:center}
+.scroll-motion-wrap.motion-ready .motion-fallback{display:none}
+.lottie-icon svg{display:block;width:100%;height:100%;overflow:visible}
+.about-introduction{position:relative;padding-left:51px}
+.shutter-motion{width:34px;height:34px;position:absolute;top:3px;left:0}
+.shutter-fallback{color:#d2bf9e;display:grid;place-items:center;width:100%;height:100%;font-size:25px}
+.shutter-motion.motion-ready .shutter-fallback{display:none}
+.motion-credits{padding:0 0 24px;color:#99988e;font:8px/1.8 var(--sans);letter-spacing:.5px}
+.motion-credits summary{cursor:pointer;width:max-content}
+.motion-credits p{margin:10px 0 0;line-height:2}
+@media(max-width:800px){.explore .scroll-motion-wrap .lottie-icon{inset:2px 6px}.about-introduction{padding-left:43px}.shutter-motion{width:28px;height:28px}}

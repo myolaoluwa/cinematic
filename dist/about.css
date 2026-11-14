@@ -1,0 +1,38 @@
+.about-cinema{position:relative;isolation:isolate;overflow:hidden;padding:44px 6% 0;min-height:850px;min-height:max(850px,100svh);display:flex;flex-direction:column;background:#151513}
+.about-backdrops,.about-shade{position:absolute;inset:0;z-index:-1;pointer-events:none}
+.about-backdrop{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:80% 40%;filter:grayscale(1) brightness(.68);opacity:0;transition:opacity .8s cubic-bezier(.4,0,.2,1)}
+.about-backdrop:nth-child(1){object-position:70% 35%}
+.about-backdrop:nth-child(2){object-position:center}
+.about-backdrop.is-active{opacity:1}
+.about-shade{background:linear-gradient(90deg,rgba(15,15,13,.97),rgba(15,15,13,.88) 27%,rgba(15,15,13,.48) 58%,rgba(15,15,13,.08)),linear-gradient(0deg,#151513ed,transparent 28%,transparent 76%,#15151388)}
+.about-cinema .section-label{color:#c2c0b7;margin-bottom:0;gap:24px}
+.about-story{flex:1;display:flex;flex-direction:column;justify-content:center;padding:56px 0 65px;min-width:0}
+.about-introduction{margin-bottom:40px}
+.about-introduction .eyebrow{font-size:8px;color:#c2b7a5;letter-spacing:2px}
+.about-introduction>p{font-size:11px;line-height:1.7;color:#b7b3a8;margin:12px 0 0}
+.about-chapter{max-width:760px;min-height:325px}
+.about-chapter[hidden]{display:none}
+.about-kicker{display:block;font-size:8px;letter-spacing:1.8px;color:#c3b59f;margin-bottom:20px}
+.about-cinema h2{font:300 clamp(75px,8.3vw,132px)/.95 var(--serif);letter-spacing:-.045em;margin:0 0 22px;white-space:nowrap}
+.about-cinema h2 i{color:#d2bf9e;font-weight:300}
+.about-lead{font:300 28px/1.15 var(--serif);margin:0 0 20px;color:var(--paper)}
+.about-body{font:11px/1.9 var(--sans);max-width:365px;color:#bcb8ae;margin:0 0 23px;text-wrap:pretty}
+.about-footnote{font:7px var(--sans);letter-spacing:1.5px;color:#aaa496}
+.about-chapter>.text-button{margin-top:26px;padding:7px 0;font-size:8px;color:#e7e4dc}
+.about-bottom{display:flex;justify-content:space-between;align-items:center;gap:35px;border-top:1px solid #ffffff32;padding:22px 0}
+.about-tabs{display:flex;gap:32px;min-width:0}
+.about-tabs button{position:relative;padding:10px 0;font:11px var(--sans);color:#aaa69c;white-space:nowrap}
+.about-tabs button span{font-size:7px;margin-right:10px;color:#8f897b}
+.about-tabs button[aria-selected=true]{color:#e7e4dc}
+.about-tabs button::after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:#d2bf9e;transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.4,0,.2,1)}
+.about-tabs button[aria-selected=true]::after{transform:scaleX(1)}
+.about-stepper{display:flex;gap:12px;align-items:center;flex-shrink:0}
+.about-stepper>span{font-size:8px;letter-spacing:1px;color:#aaa496;margin-right:15px;font-variant-numeric:tabular-nums}
+.about-stepper button{width:40px;height:40px;border:1px solid #ffffff42;border-radius:50%;font-size:17px;transition:background-color .2s}
+.about-stepper button:disabled{opacity:.25;cursor:default}
+.about-stepper button:hover:not(:disabled){background:#ffffff15}
+.about-baseline{display:flex;justify-content:space-between;border-top:1px solid #ffffff18;padding:16px 0;font-size:7px;letter-spacing:1.4px;color:#a49f92;gap:20px}
+.reduce-motion .about-backdrop{transition:opacity .15s}
+.reduce-motion .about-tabs button::after{transition:none}
+@media(max-width:800px){.about-cinema{min-height:850px;padding:32px 6% 0}.about-cinema .section-label{font-size:6px;line-height:1.7}.about-cinema .section-label span:last-child{max-width:140px}.about-backdrop{object-position:64% center}.about-backdrop:nth-child(1){object-position:61% center}.about-shade{background:linear-gradient(90deg,#151513e8,#15151399 60%,#15151344),linear-gradient(0deg,#151513 3%,transparent 80%)}.about-story{padding:55px 0 45px}.about-introduction{margin-bottom:36px}.about-introduction .eyebrow{font-size:7px;letter-spacing:1.3px}.about-cinema h2{font-size:clamp(58px,12.5vw,100px);letter-spacing:-.045em}.about-chapter{min-height:335px}.about-lead{font-size:27px}.about-body{max-width:330px;font-size:11px}.about-bottom{align-items:flex-start;flex-direction:column;gap:20px;padding:18px 0}.about-tabs{width:100%;justify-content:space-between;gap:12px}.about-tabs button{font-size:9px}.about-tabs button span{margin-right:5px;font-size:6px}.about-stepper{align-self:flex-end;gap:10px}.about-stepper button{width:36px;height:36px}.about-stepper>span{margin-right:8px}.about-baseline{font-size:6px;letter-spacing:.8px;line-height:1.7}}
+@media(prefers-reduced-motion:reduce){.about-backdrop{transition:opacity .15s!important}.about-tabs button::after{transition:none}}
