@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#151513"><meta name="description" content="Still / Stories — a cinematic collection of portraits, places, and passing moments. A photography portfolio concept.">
+  <title>Still / Stories — A photographic journal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css"><script src="assets/gsap.min.js" defer></script><script src="app.js" defer></script>
+</head>
+<body class="opening">
+  <a class="skip-link" href="#work">Skip to photographs</a>
+  <div class="grain" aria-hidden="true"></div>
+  <header class="header"><a class="brand" href="#" aria-label="Still Stories home">S<span class="brand-slash">/</span>S<span class="brand-caption">INDEPENDENT<br>PHOTOGRAPHY</span></a><nav aria-label="Main navigation"><a href="#work">Selected work <span>08</span></a><a href="#about">The perspective</a><button class="contact-trigger">Let’s talk <span>↗</span></button></nav><button class="mobile-menu" aria-label="Open menu" aria-expanded="false">Menu +</button></header>
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-top"><span>A PHOTOGRAPHIC JOURNAL</span><span>VOL. 01 — SELECTED MOMENTS</span></div>
+      <div class="hero-composition">
+        <figure class="float-photo p1"><img src="assets/photo-2.jpg" alt="Mist gathering over a quiet green valley"><figcaption>01 / ELSEWHERE</figcaption></figure>
+        <figure class="float-photo p2"><img src="assets/photo-3.jpg" alt="Fashion portrait in soft natural light"><figcaption>02 / IN HER ELEMENT</figcaption></figure>
+        <figure class="float-photo p3"><img src="assets/photo-6.jpg" alt="Ocean waves stretching to the horizon"></figure>
+        <h1 id="hero-title"><span class="title-first">STILL<span class="title-star">✳</span></span><span class="title-second"><i>&</i> STORIES</span></h1>
+        <figure class="float-photo p4"><img src="assets/photo-1.jpg" alt="Intimate portrait of a woman with windswept hair"><figcaption>03 / HUMAN NATURE</figcaption></figure>
+        <figure class="float-photo p5"><img src="assets/photo-4.jpg" alt="Mountain silhouette beneath a star filled sky"></figure>
+        <span class="composition-note">A little light.<br>A fleeting feeling.<br>Something worth keeping.</span>
+      </div>
+      <div class="hero-bottom"><button id="replay" class="text-button"><span class="play-icon">▷</span> REPLAY THE OPENING <span class="duration">00:07</span></button><p>Photographs that feel<br>like a memory.</p><a class="explore" href="#work">SCROLL TO EXPLORE <span>↓</span></a></div>
+      <div class="hero-rule"><span>PORTRAITS · PLACES · PASSING MOMENTS</span><span>AVAILABLE FOR COLLABORATIONS <b>●</b></span></div>
+    </section>
+    <section class="work" id="work" aria-labelledby="work-title"><div class="section-label"><span>01 / THE COLLECTION</span><span>AN EXPLORATION OF THE EVERYDAY</span></div><div class="work-heading"><h2 id="work-title">Selected <i>stories.</i></h2><div class="filters" aria-label="Filter photographs"><button class="active" data-filter="all" aria-pressed="true">All <sup>08</sup></button><button data-filter="portraits" aria-pressed="false">People</button><button data-filter="places" aria-pressed="false">Places</button><button data-filter="editorial" aria-pressed="false">Editorial</button></div></div><div id="gallery" class="gallery"></div><p class="gallery-end">A collection in motion. More stories to come. <span>↗</span></p></section>
+    <section class="about" id="about"><div class="section-label"><span>02 / THE PERSPECTIVE</span><span>BEHIND THE FRAME</span></div><div class="about-grid"><div class="about-image"><img src="assets/photo-8.jpg" alt="A still lake reflecting mountains in the last light of day" loading="lazy"><span>THE ART OF PAYING ATTENTION.</span></div><div class="about-copy"><span class="eyebrow">STILL / STORIES</span><h2>For the things<br>you can’t quite<br><i>put into words.</i></h2><p>A face in a crowd. The way light falls on an ordinary afternoon. A landscape that makes you pause.</p><p>This journal is a place for those moments. An ongoing conversation between people, places, and the quiet stories that connect them.</p><button class="text-button contact-trigger">LET’S MAKE SOMETHING MEANINGFUL <span>↗</span></button></div></div></section>
+    <footer><span class="eyebrow">HAVE A STORY IN MIND?</span><button class="footer-contact contact-trigger">Let’s make<br><i>it a still.</i> <span>↗</span></button><div class="footer-bottom"><a class="footer-brand" href="#">STILL / STORIES</a><span>PORTFOLIO CONCEPT · SAMPLE PHOTOGRAPHY</span><a href="#">BACK TO TOP ↑</a></div></footer>
+  </main>
+  <div class="intro" id="intro" role="dialog" aria-modal="true" aria-label="Cinematic opening"><span class="intro-label">STILL / STORIES PRESENTS</span><div id="photo-stage" aria-hidden="true"></div><div class="intro-title"><span>Every frame.</span><i>A feeling.</i></div><div class="intro-bottom"><span id="intro-count">01 / 08</span><span class="intro-caption">A COLLECTION OF FLEETING MOMENTS</span><button id="pause-intro" aria-pressed="false">PAUSE ?</button><button id="skip-intro">SKIP INTRO ↗</button></div><div class="intro-progress"></div></div>
+  <dialog id="lightbox" class="lightbox"><button class="close-dialog" aria-label="Close photo">Close ×</button><button class="previous" aria-label="Previous photo">←</button><figure><img id="lightbox-image" src="assets/photo-1.jpg" alt=""><figcaption><span id="lightbox-title"></span><span id="lightbox-number"></span></figcaption></figure><button class="next" aria-label="Next photo">→</button></dialog>
+  <dialog id="contact" class="contact-dialog"><button class="close-dialog" aria-label="Close contact">Close ×</button><span class="eyebrow">A NEW STORY STARTS HERE</span><h2>Let’s create<br><i>something lasting.</i></h2><p>This portfolio is ready for your own name, photographs, and contact details. Add your email below to preview your inquiry link.</p><form id="contact-form"><label for="email">YOUR CONTACT EMAIL</label><input id="email" type="email" placeholder="you@yourstudio.com" required><button type="submit">Create inquiry link ↗</button></form><a id="inquiry-link" hidden>Send an inquiry ↗</a><p class="contact-note">Demo setup · your email is kept only in this browser.</p></dialog>
+</body></html>
