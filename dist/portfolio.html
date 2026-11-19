@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#151513"><meta name="description" content="Browse the photography categories offered by Evayoung Photography."><title>Photo Categories | Evayoung Photography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="refinement.css"><link rel="stylesheet" href="pages.css"><link rel="stylesheet" href="polish.css"><script src="pages.js" defer></script>
+</head>
+<body>
+<header class="header"><a class="brand" href="index.html" aria-label="Evayoung Photography home"><span>Evayoung</span><span class="brand-slash">/</span><span class="brand-caption">PHOTOGRAPHY</span></a><nav aria-label="Main navigation"><a href="index.html#work">Photos</a><a href="services.html">Services</a><a href="portfolio.html">Categories</a><button class="contact-trigger">Contact <span>↗</span></button></nav><button class="mobile-menu" aria-label="Open menu">Menu +</button></header>
+<main>
+<section class="page-header"><div class="section-label"><span>02 / PHOTO CATEGORIES</span><span>WEDDINGS · PORTRAITS · EVENTS</span></div><h1>Browse by<br><i>category.</i></h1><p>Explore weddings, portraits, family sessions, and more. Each category opens a matching photo collection.</p></section>
+<section class="page-section"><div class="page-section-label"><span>PHOTOGRAPHY CATEGORIES</span><span id="category-count">07 CATEGORIES / 15 SERVICES</span></div><div class="portfolio-tools"><h2>Choose a <i>category.</i></h2><div class="category-filter" aria-label="Filter portfolio categories"><button class="active" data-category="all" aria-pressed="true">All</button><button data-category="weddings" aria-pressed="false">Weddings</button><button data-category="portraits" aria-pressed="false">Portraits</button><button data-category="love" aria-pressed="false">Love Stories</button><button data-category="celebrations" aria-pressed="false">Celebrations</button><button data-category="family" aria-pressed="false">Family Moments</button><button data-category="lifestyle" aria-pressed="false">Studio &amp; Lifestyle</button><button data-category="editorial" aria-pressed="false">Editorial &amp; Fashion</button></div></div>
+<div class="category-grid">
+<article class="category-card" data-category="weddings"><a href="index.html?category=weddings#work"><div class="category-image"><img src="assets/categories/weddings.jpg" alt=""></div><div class="category-meta"><h3>Weddings</h3><span>Wedding · Traditional · Pre-Wedding</span></div></a></article>
+<article class="category-card" data-category="portraits"><a href="index.html?category=portraits#work"><div class="category-image"><img src="assets/categories/portraits.jpg" alt=""></div><div class="category-meta"><h3>Portraits</h3><span>Personal · Graduation · Studio</span></div></a></article>
+<article class="category-card" data-category="love"><a href="index.html?category=love#work"><div class="category-image"><img src="assets/categories/love-stories.jpg" alt=""></div><div class="category-meta"><h3>Love Stories</h3><span>Couples · Pre-Wedding · Outdoor</span></div></a></article>
+<article class="category-card" data-category="celebrations"><a href="index.html?category=celebrations#work"><div class="category-image"><img src="assets/categories/celebrations.jpg" alt=""></div><div class="category-meta"><h3>Celebrations</h3><span>Birthday · Graduation · Events</span></div></a></article>
+<article class="category-card" data-category="family"><a href="index.html?category=family#work"><div class="category-image"><img src="assets/categories/family.jpg" alt=""></div><div class="category-meta"><h3>Family Moments</h3><span>Family · Maternity · Lifestyle</span></div></a></article>
+<article class="category-card" data-category="lifestyle"><a href="index.html?category=lifestyle#work"><div class="category-image"><img src="assets/categories/studio-lifestyle.jpg" alt=""></div><div class="category-meta"><h3>Studio & Lifestyle</h3><span>Studio · Outdoor · Everyday</span></div></a></article>
+<article class="category-card" data-category="editorial"><a href="index.html?category=editorial#work"><div class="category-image"><img src="assets/categories/editorial-fashion.jpg" alt=""></div><div class="category-meta"><h3>Editorial & Fashion</h3><span>Beauty · Fashion · Editorial</span></div></a></article>
+</div></section>
+<section class="page-inquiry"><h2>Have a session<br><i>in mind?</i></h2><button class="contact-trigger" aria-label="Ask about a photo session">↗</button></section>
+</main>
+<footer><span class="eyebrow">HAVE A SESSION IN MIND?</span><button class="footer-contact contact-trigger">Let's talk<br><i>about your photos.</i> <span>↗</span></button><div class="footer-bottom"><a class="footer-brand" href="index.html">Evayoung Photography</a><span>PORTRAITS · WEDDINGS · EVENTS</span><a href="#">BACK TO TOP ↑</a></div></footer>
+<script>
+document.querySelectorAll('.category-filter button').forEach(button=>button.addEventListener('click',()=>{
+ const category=button.dataset.category;
+ document.querySelectorAll('.category-filter button').forEach(b=>{b.classList.toggle('active',b===button);b.setAttribute('aria-pressed',String(b===button))});
+ let count=0;
+ document.querySelectorAll('.category-card').forEach(card=>{const show=category==='all'||card.dataset.category===category;card.hidden=!show;if(show)count++});
+ document.getElementById('category-count').textContent=category==='all'?'07 CATEGORIES / 15 SERVICES':`${String(count).padStart(2,'0')} ${count===1?'CATEGORY':'CATEGORIES'}`;
+}));
+</script>
+</body></html>

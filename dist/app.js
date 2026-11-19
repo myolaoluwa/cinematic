@@ -1,12 +1,12 @@
 const photographs = [
-  {id:1,title:'Human nature',category:'portraits',label:'Portraits',description:'An intimate portrait in natural light.'},
-  {id:2,title:'Somewhere, slowly',category:'places',label:'Landscape',description:'Mist settles over a quiet green valley.'},
-  {id:3,title:'In her element',category:'editorial',label:'Editorial',description:'A study of movement and personal style.'},
-  {id:4,title:'After the last light',category:'places',label:'Night studies',description:'Stars fill the sky above a mountain silhouette.'},
-  {id:5,title:'A quiet presence',category:'portraits',label:'Portraits',description:'An honest face, a moment of stillness.'},
-  {id:6,title:'Between tides',category:'places',label:'Seascape',description:'Ocean waves stretch toward an open horizon.'},
-  {id:7,title:'Everyday poetry',category:'editorial',label:'Editorial',description:'A small observation of everyday style.'},
-  {id:8,title:'The long way home',category:'places',label:'Landscape',description:'A mountain lake reflects the fading daylight.'}
+  {id:1,title:'Wedding portrait',category:'weddings',label:'Weddings',description:'A bride in a detailed wedding dress, photographed in soft light.'},
+  {id:2,title:'Portrait in green',category:'portraits',label:'Portraits',description:'A close portrait in traditional green clothing.'},
+  {id:3,title:'A moment together',category:'love',label:'Love stories',description:'A couple sharing a quiet moment by the window.'},
+  {id:4,title:'Family tradition',category:'celebrations',label:'Celebrations',description:'A family sharing a moment in traditional clothing.'},
+  {id:5,title:'Family portrait',category:'family',label:'Family moments',description:'A family portrait in coordinated traditional clothing.'},
+  {id:6,title:'Studio portrait',category:'lifestyle',label:'Studio & lifestyle',description:'A relaxed studio portrait in warm, natural tones.'},
+  {id:7,title:'Beauty in focus',category:'editorial',label:'Editorial & fashion',description:'A beauty portrait styled for a skincare editorial.'},
+  {id:8,title:'Maternity portrait',category:'family',label:'Family moments',description:'A quiet maternity portrait in a bright studio.'}
 ];
 const $=s=>document.querySelector(s);
 const motionQuery=matchMedia('(prefers-reduced-motion: reduce)');
@@ -15,9 +15,9 @@ let reduced=motionQuery.matches||query.get('reduce')==='1';
 document.documentElement.classList.toggle('reduce-motion',reduced);
 let visiblePhotos=[...photographs],viewerPhotos=visiblePhotos,photoIndex=0,lastPhotoTrigger=null;
 const stories=[
- {title:'Human nature',subtitle:'The beauty of being yourself.',category:'Portrait studies',ids:[1,5],text:'Two faces. Two entirely different kinds of presence. A small study of expression, closeness, and the quiet confidence of being seen.'},
- {title:'Somewhere, slowly',subtitle:'Take the long way.',category:'Places & atmosphere',ids:[2,8,4,6],text:'From a valley wrapped in mist to the edge of the sea. A journey through changing light, open space, and the feeling of being somewhere else.'},
- {title:'In her element',subtitle:'A little movement. A lot of character.',category:'Editorial studies',ids:[3,7],text:'Style as a form of expression. A pair of observations on gesture, texture, and the small details that give an image its own rhythm.'}
+ {title:'Weddings',subtitle:'The people and moments in between.',category:'WEDDINGS',ids:[1,3],image:'assets/story-photo-1.jpg',thumbnail:'assets/story-thumb-1.jpg',alt:'A couple dressed for their wedding standing together.',text:'Wedding photographs that leave room for the people, traditions, and small moments that make the day yours.'},
+ {title:'Portraits',subtitle:'Personal, relaxed, and true to you.',category:'PORTRAITS',ids:[2,7],image:'assets/story-photo-2.jpg',thumbnail:'assets/story-thumb-2.jpg',alt:'A woman in a green outfit seated for a portrait.',text:'Portraits shaped around your style, with simple direction and time to feel comfortable.'},
+ {title:'Family moments',subtitle:'Photos of the people closest to you.',category:'FAMILY',ids:[5,8],image:'assets/story-photo-3.jpg',thumbnail:'assets/story-thumb-3.jpg',alt:'An expecting couple together during a maternity session.',text:'Family and maternity photographs that keep the focus on the people and moments you want to remember.'}
 ];
 let activeTransition=null;
 function transitionDOM(update){
@@ -44,32 +44,35 @@ function renderGallery(filter='all'){
   visiblePhotos=photographs.filter(p=>filter==='all'||p.category===filter);
   $('#gallery').replaceChildren(...visiblePhotos.map((p,i)=>{
     const button=document.createElement('button');button.className='photo-card reveal';button.setAttribute('aria-label',`View ${p.title}`);
-    button.innerHTML=`<span class="photo-number">${String(p.id).padStart(2,'0')} / 08</span><div class="image-wrap"><img src="assets/photo-${p.id}.jpg" alt="${p.description}" loading="lazy" decoding="async"><div class="view-photo"><span>EXPLORE ↗</span></div></div><div class="photo-meta"><span class="photo-name">${p.title}</span><span class="photo-category">${p.label} <span aria-hidden="true">↗</span></span></div>`;
+    button.innerHTML=`<span class="photo-number">${String(p.id).padStart(2,'0')} / 08</span><div class="image-wrap"><img src="assets/photo-${p.id}.jpg" alt="${p.description}" loading="lazy" decoding="async"><div class="view-photo"><span>VIEW PHOTO ↗</span></div></div><div class="photo-meta"><span class="photo-name">${p.title}</span><span class="photo-category">${p.label} <span aria-hidden="true">↗</span></span></div>`;
     button.querySelector('img').style.viewTransitionName=`frame-${p.id}`;
     button.addEventListener('click',()=>openPhoto(visiblePhotos,i,button));observer.observe(button);return button;
   }));
-  $('#collection-count').textContent=`${String(visiblePhotos.length).padStart(2,'0')} FRAMES / ${filter==='all'?'ALL STORIES':filter.toUpperCase()}`;
+  $('#collection-count').textContent=`${String(visiblePhotos.length).padStart(2,'0')} PHOTOS / ${filter==='all'?'ALL':filter.toUpperCase()}`;
 }
-renderGallery();
+const requestedFilter=query.get('category');
+const initialFilter=[...document.querySelectorAll('[data-filter]')].some(button=>button.dataset.filter===requestedFilter)?requestedFilter:'all';
+document.querySelectorAll('[data-filter]').forEach(button=>{const active=button.dataset.filter===initialFilter;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active))});
+renderGallery(initialFilter);
 document.querySelectorAll('[data-filter]').forEach(button=>button.addEventListener('click',()=>{
  document.querySelectorAll('[data-filter]').forEach(b=>{b.classList.toggle('active',b===button);b.setAttribute('aria-pressed',String(b===button))});renderGallery(button.dataset.filter);
 }));
-function updateLightbox(){const p=viewerPhotos[photoIndex];$('#lightbox-image').src=`assets/photo-${p.id}.jpg`;$('#lightbox-image').alt=p.description;$('#lightbox-title').textContent=p.title;$('#lightbox-number').textContent=`${String(photoIndex+1).padStart(2,'0')} / ${String(viewerPhotos.length).padStart(2,'0')}`;$('#viewer-title').textContent=p.title;$('#viewer-description').textContent=p.description;$('#viewer-category').textContent=p.label;$('#viewer-count').textContent=$('#lightbox-number').textContent;$('#viewer-inquire').dataset.inquiry=`A story like ${p.title}`;renderViewerFrames();}
+function updateLightbox(){const p=viewerPhotos[photoIndex];$('#lightbox-image').src=`assets/photo-${p.id}.jpg`;$('#lightbox-image').alt=p.description;$('#lightbox-title').textContent=p.title;$('#lightbox-number').textContent=`${String(photoIndex+1).padStart(2,'0')} / ${String(viewerPhotos.length).padStart(2,'0')}`;$('#viewer-title').textContent=p.title;$('#viewer-description').textContent=p.description;$('#viewer-category').textContent=p.label;$('#viewer-count').textContent=$('#lightbox-number').textContent;$('#viewer-inquire').dataset.inquiry=`${p.label} photography`;renderViewerFrames();}
 function stepPhoto(direction){photoIndex=(photoIndex+direction+viewerPhotos.length)%viewerPhotos.length;transitionDOM(updateLightbox)}
 $('.previous').onclick=()=>stepPhoto(-1);$('.next').onclick=()=>stepPhoto(1);
 $('#lightbox').addEventListener('keydown',e=>{if(e.key==='ArrowLeft')stepPhoto(-1);if(e.key==='ArrowRight')stepPhoto(1)});
 document.querySelectorAll('.close-dialog').forEach(b=>b.onclick=()=>b.closest('dialog').close());
 document.querySelectorAll('dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close()}}));
-let inquirySubject='Photography inquiry — Still / Stories';
+let inquirySubject='Photography inquiry — Evayoung Photography';
 document.querySelectorAll('.contact-trigger').forEach(b=>b.onclick=()=>{
  if($('#lightbox').open)$('#lightbox').close();
  if($('#site-menu').open)$('#site-menu').close();
- inquirySubject=b.dataset.inquiry||'Photography inquiry — Still / Stories';
+ inquirySubject=b.dataset.inquiry||'Photography inquiry — Evayoung Photography';
  $('#inquiry-context').textContent=b.dataset.inquiry||'';$('#inquiry-context').hidden=!b.dataset.inquiry;
  $('#inquiry-link').hidden=true;
  $('#contact').showModal();
 });
-$('#contact-form').addEventListener('submit',e=>{e.preventDefault();const email=$('#email').value.trim();if(!$('#contact-form').reportValidity())return;const link=$('#inquiry-link');link.href=`mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(inquirySubject)}`;link.hidden=false;link.textContent=`Contact ${email} ↗`;});
+$('#contact-form').addEventListener('submit',e=>{e.preventDefault();const email=$('#email').value.trim();if(!$('#contact-form').reportValidity())return;const link=$('#inquiry-link');link.href=`mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(inquirySubject)}`;link.hidden=false;link.textContent='Open email draft ↗';});
 document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>{
  const isIndex=button.dataset.view==='index';
  transitionDOM(()=>$('#gallery').classList.toggle('is-index',isIndex));
@@ -85,14 +88,14 @@ const introTitle=$('.intro-title'),introCount=$('#intro-count');
 let stageRadius=Math.min(innerWidth*.37,450);
 window.addEventListener('resize',()=>stageRadius=Math.min(innerWidth*.37,450));
 const intro=$('#intro'),stage=$('#photo-stage');
-const frames=Array.from({length:14},(_,i)=>{const img=new Image();img.src=`assets/photo-${i%8+1}.jpg`;img.className='intro-photo';img.alt='';img.style.opacity='0';stage.append(img);return img});
+const frames=Array.from({length:14},(_,i)=>{const img=new Image();img.src=`assets/intro-photo-${i+1}.jpg`;img.className='intro-photo';img.alt='';img.style.opacity='0';stage.append(img);return img});
 const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
 function finishIntro(){introTimeline?.pause();introRunning=false;gsap.set('.title-first,.title-second',{y:0,opacity:1});frames.forEach(img=>img.style.willChange='auto');$('main').inert=false;$('.header').inert=false;intro.classList.add('finished');intro.inert=true;document.body.classList.remove('opening');if(intro.contains(document.activeElement))$('#replay').focus({preventScroll:true});window.dispatchEvent(new Event('portfolio:intro-end'))}
 function renderIntro(){
  const t=playhead.time;
  const assemble=ease(Math.max(0,Math.min(1,(t-.7)/2.3)));
  const travel=ease(Math.max(0,Math.min(1,(t-3)/3.8)));
- introCount.textContent=`${String(Math.min(8,Math.floor(t/.9)+1)).padStart(2,'0')} / 08`;
+ introCount.textContent=`${String(Math.min(frames.length,Math.floor(t/(7.6/frames.length))+1)).padStart(2,'0')} / ${String(frames.length).padStart(2,'0')}`;
  frames.forEach((img,i)=>{
   const col=i%5-2,row=Math.floor(i/5)-1;
   const depth=(i%3)*-160;
@@ -178,13 +181,13 @@ const rail=$('#story-rail');let storyIndex=0,railTick=0;
 rail.replaceChildren(...stories.map((story,i)=>{
  const article=document.createElement('article');article.className='story-slide';
  article.setAttribute('aria-roledescription','slide');article.setAttribute('aria-label',`${i+1} of ${stories.length}: ${story.title}`);
- article.innerHTML=`<button class="story-open" aria-label="Explore ${story.title}"><img src="assets/photo-${story.ids[0]}.jpg" alt="${photographs.find(p=>p.id===story.ids[0]).description}" loading="lazy"><span class="story-shade" aria-hidden="true"></span><span class="story-topline"><span>${story.category}</span><span>${String(story.ids.length).padStart(2,'0')} frames</span></span><span class="story-caption"><span class="story-number">0${i+1}</span><span class="story-title">${story.title}</span><span class="story-subtitle">${story.subtitle}</span><span class="story-enter" aria-hidden="true">&#8599;</span></span></button>`;
+ article.innerHTML=`<button class="story-open" aria-label="Explore ${story.title}"><img src="${story.image}" alt="${story.alt}" loading="lazy"><span class="story-shade" aria-hidden="true"></span><span class="story-topline"><span>${story.category}</span><span>${String(story.ids.length).padStart(2,'0')} frames</span></span><span class="story-caption"><span class="story-number">0${i+1}</span><span class="story-title">${story.title}</span><span class="story-subtitle">${story.subtitle}</span><span class="story-enter" aria-hidden="true">&#8599;</span></span></button>`;
  article.querySelector('button').onclick=()=>openPhoto(story.ids.map(id=>photographs.find(p=>p.id===id)),0,article.querySelector('button'));
  return article;
 }));
 $('#story-thumbnails').replaceChildren(...stories.map((story,i)=>{
  const button=document.createElement('button');button.className='story-thumb';button.setAttribute('aria-label',`Show ${story.title}`);
- button.innerHTML=`<img src="assets/photo-${story.ids[0]}.jpg" alt="" loading="lazy"><span>0${i+1}</span>`;
+ button.innerHTML=`<img src="${story.thumbnail}" alt="" loading="lazy"><span>0${i+1}</span>`;
  button.onclick=()=>selectStory(i);return button;
 }));
 function updateStoryControls(){

@@ -51,10 +51,21 @@ for (const filename of allFiles) {
   }
 }
 
+const photoCatalog = JSON.parse(readFileSync(path.join(root, 'scripts/photo-catalog.json'), 'utf8'));
+const sources = photoCatalog.assignments.map(photo => photo.source);
+assert.equal(new Set(sources).size, sources.length, 'A source photograph is assigned more than once.');
+for (const [role, count] of Object.entries({ intro: 14, hero: 5, gallery: 8, story: 3, 'story-thumb': 3, about: 3, category: 7 })) {
+  assert.equal(photoCatalog.assignments.filter(photo => photo.role === role).length, count, `Expected ${count} curated ${role} photos.`);
+}
+for (const photo of photoCatalog.assignments) {
+  assert(existsSync(path.join(dist, photo.asset)), `Missing curated photograph ${photo.asset}.`);
+}
+
 // The gallery and cinematic intro reference these files dynamically.
 for (let photo = 1; photo <= 8; photo++) {
   assert(existsSync(path.join(dist, `assets/photo-${photo}.jpg`)), `Missing photograph ${photo}.`);
 }
+for (let photo = 1; photo <= 14; photo++) assert(existsSync(path.join(dist, `assets/intro-photo-${photo}.jpg`)), `Missing intro photograph ${photo}.`);
 for (const name of ['camera-shutter', 'soft-scroll']) {
   const animation = JSON.parse(readFileSync(path.join(dist, `assets/lottie/${name}.json`), 'utf8'));
   assert(animation.layers?.length && animation.op > animation.ip, `Invalid Lottie asset: ${name}`);
