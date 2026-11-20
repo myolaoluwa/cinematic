@@ -63,16 +63,25 @@ $('.previous').onclick=()=>stepPhoto(-1);$('.next').onclick=()=>stepPhoto(1);
 $('#lightbox').addEventListener('keydown',e=>{if(e.key==='ArrowLeft')stepPhoto(-1);if(e.key==='ArrowRight')stepPhoto(1)});
 document.querySelectorAll('.close-dialog').forEach(b=>b.onclick=()=>b.closest('dialog').close());
 document.querySelectorAll('dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close()}}));
-let inquirySubject='Photography inquiry — Evayoung Photography';
 document.querySelectorAll('.contact-trigger').forEach(b=>b.onclick=()=>{
  if($('#lightbox').open)$('#lightbox').close();
  if($('#site-menu').open)$('#site-menu').close();
- inquirySubject=b.dataset.inquiry||'Photography inquiry — Evayoung Photography';
- $('#inquiry-context').textContent=b.dataset.inquiry||'';$('#inquiry-context').hidden=!b.dataset.inquiry;
- $('#inquiry-link').hidden=true;
+ const context=b.dataset.inquiry||'';
+ const form=$('#contact-form');
+ const typeField=form.elements.namedItem('service_type');
+ const lowerContext=context.toLowerCase();
+ const serviceHint=lowerContext.includes('event')?'event':
+  lowerContext.includes('wedding')||lowerContext.includes('couple')?'wedding':
+  lowerContext.includes('family')||lowerContext.includes('maternity')?'family':
+  lowerContext.includes('birthday')?'birthday':
+  lowerContext.includes('portrait')?'portrait':'';
+ const option=[...typeField.options].find(item=>serviceHint&&item.value.toLowerCase().includes(serviceHint));
+ typeField.value=option?.value||'';
+ form.elements.namedItem('enquiry_context').value=context||'General booking or photography enquiry';
+ form.elements.namedItem('_subject').value=`New ${context||'booking or enquiry'} — Evayoung Photography`;
+ $('#inquiry-context').textContent=context||'BOOKING / GENERAL ENQUIRY';$('#inquiry-context').hidden=false;
  $('#contact').showModal();
 });
-$('#contact-form').addEventListener('submit',e=>{e.preventDefault();const email=$('#email').value.trim();if(!$('#contact-form').reportValidity())return;const link=$('#inquiry-link');link.href=`mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(inquirySubject)}`;link.hidden=false;link.textContent='Open email draft ↗';});
 document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>{
  const isIndex=button.dataset.view==='index';
  transitionDOM(()=>$('#gallery').classList.toggle('is-index',isIndex));

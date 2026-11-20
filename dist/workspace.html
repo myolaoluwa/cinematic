@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#151513">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Private Workspace | Evayoung Photography</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="workspace.css">
+  <script src="workspace.js" defer></script>
+</head>
+<body class="workspace-page">
+  <a class="skip-link" href="#workspace-main">Skip to workspace</a>
+  <header class="workspace-header">
+    <a class="workspace-brand" href="index.html" aria-label="Evayoung Photography home">
+      <span>Evayoung</span><span class="brand-slash">/</span><span class="brand-caption">PHOTOGRAPHY</span>
+    </a>
+    <a class="back-to-site" href="index.html">Back to the website <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="workspace-main">
+    <section id="login-view" class="login-view" aria-labelledby="login-title">
+      <p class="eyebrow">PRIVATE STUDIO · OWNER ACCESS</p>
+      <h1 id="login-title">Your client<br><i>workspace.</i></h1>
+      <p class="login-intro">Sign in to organize shoots, prepare private galleries, and deliver finished photos.</p>
+      <form id="login-form" class="login-form">
+        <label for="login-email">EMAIL ADDRESS</label>
+        <input id="login-email" name="email" type="email" autocomplete="username" required>
+        <label for="login-password">PASSWORD</label>
+        <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+        <p id="login-error" class="form-message" role="alert" hidden></p>
+        <button class="button button-primary" type="submit">SIGN IN <span aria-hidden="true">↗</span></button>
+      </form>
+      <p class="login-note">Workspace access is limited to Evayoung Photography.</p>
+    </section>
+
+    <section id="app-view" class="app-view" hidden>
+      <div class="workspace-topline">
+        <p class="eyebrow">PRIVATE STUDIO <span aria-hidden="true">/</span> PHOTOGRAPHER WORKSPACE</p>
+        <button id="logout-button" class="text-button" type="button">SIGN OUT</button>
+      </div>
+      <div id="global-message" class="global-message" role="status" aria-live="polite" hidden></div>
+
+      <section id="dashboard-view" class="dashboard-view" aria-labelledby="dashboard-title">
+        <div class="dashboard-heading">
+          <div>
+            <p class="eyebrow">YOUR CLIENT COLLECTIONS</p>
+            <h1 id="dashboard-title">Every shoot,<br><i>in its own place.</i></h1>
+            <p class="dashboard-intro">Private galleries for proofing, choosing, and delivering final photos.</p>
+          </div>
+          <button id="new-collection-button" class="button button-outline" type="button">NEW COLLECTION <span aria-hidden="true">+</span></button>
+        </div>
+
+        <div class="workspace-stats" aria-label="Workspace summary">
+          <div><span id="active-count">0</span><p>OPEN TO CLIENTS</p></div>
+          <div><span id="total-count">0</span><p>COLLECTIONS</p></div>
+          <div><span id="ready-count">0</span><p>READY TO SHARE</p></div>
+        </div>
+
+        <form id="create-form" class="create-form" hidden>
+          <div class="form-heading">
+            <div><span class="eyebrow">A NEW SHOOT</span><h2>Create a collection.</h2></div>
+            <button id="cancel-create" class="close-button" type="button" aria-label="Close form">×</button>
+          </div>
+          <div class="form-grid">
+            <label>COLLECTION NAME<input name="title" maxlength="120" required placeholder="e.g. Amara &amp; Daniel — Wedding"></label>
+            <label>CLIENT NAME <span class="optional">(OPTIONAL)</span><input name="clientName" maxlength="120" placeholder="Name shown in the gallery"></label>
+            <label>SHOOT DATE <span class="optional">(OPTIONAL)</span><input name="shootDate" type="date"></label>
+            <label>CLIENT PHOTO SELECTIONS<input name="selectionLimit" type="number" min="1" max="100" value="10" required><span class="field-help">The client may choose up to this many proof photos.</span></label>
+          </div>
+          <p class="form-message" id="create-error" role="alert" hidden></p>
+          <div class="form-actions"><button class="button button-primary" type="submit">CREATE PRIVATE COLLECTION <span aria-hidden="true">↗</span></button><span>The link and password are shown once. You can replace them later.</span></div>
+        </form>
+
+        <div class="list-heading"><h2>Your collections</h2><span id="collection-list-count">0 COLLECTIONS</span></div>
+        <div id="collection-list" class="collection-list" aria-live="polite"></div>
+        <div id="empty-state" class="empty-state" hidden>
+          <span class="empty-mark" aria-hidden="true">◎</span>
+          <h3>Your next gallery starts here.</h3>
+          <p>Create a collection for a shoot, then add proof photos when you’re ready.</p>
+          <button class="text-button" type="button" data-open-create>CREATE A COLLECTION <span aria-hidden="true">↗</span></button>
+        </div>
+      </section>
+
+      <section id="collection-view" class="collection-view" hidden aria-labelledby="collection-title">
+        <button id="back-to-collections" class="back-link" type="button"><span aria-hidden="true">←</span> ALL COLLECTIONS</button>
+        <div class="collection-heading">
+          <div>
+            <p id="collection-status" class="eyebrow"></p>
+            <h1 id="collection-title"></h1>
+            <p id="collection-subtitle" class="collection-subtitle"></p>
+          </div>
+          <button id="publish-button" class="button button-primary" type="button">PUBLISH TO CLIENT <span aria-hidden="true">↗</span></button>
+        </div>
+
+        <div id="expiry-notice" class="expiry-notice" hidden></div>
+
+        <section class="workbench-panel" aria-labelledby="details-title">
+          <div class="panel-heading"><div><span class="eyebrow">01 / COLLECTION DETAILS</span><h2 id="details-title">Keep the details clear.</h2></div><span class="panel-number">01</span></div>
+          <form id="details-form" class="form-grid">
+            <label>COLLECTION NAME<input name="title" maxlength="120" required></label>
+            <label>CLIENT NAME <span class="optional">(OPTIONAL)</span><input name="clientName" maxlength="120"></label>
+            <label>SHOOT DATE <span class="optional">(OPTIONAL)</span><input name="shootDate" type="date"></label>
+            <label>PHOTO SELECTION CAP<input name="selectionLimit" type="number" min="1" max="100" required><span class="field-help">A client can select up to this number of proofs.</span></label>
+            <div class="form-actions form-actions-wide"><button class="button button-outline button-small" type="submit">SAVE DETAILS</button><button id="replace-credentials" class="text-button" type="button">REPLACE CLIENT LINK + PASSWORD</button></div>
+          </form>
+        </section>
+
+        <section class="workbench-panel" aria-labelledby="proofs-title">
+          <div class="panel-heading"><div><span class="eyebrow">02 / PHOTO PROOFS</span><h2 id="proofs-title">Choose what they can see.</h2><p>Proof images are resized for the gallery. Clients can select up to their cap.</p></div><span class="panel-number">02</span></div>
+          <div class="upload-row">
+            <label class="file-picker">ADD PROOF PHOTOS<input id="proof-upload" type="file" accept="image/jpeg,image/png,image/webp,image/avif" multiple><span aria-hidden="true">+</span></label>
+            <span class="upload-help">JPEG, PNG, WebP or AVIF · Up to 50 MB each</span>
+          </div>
+          <p id="proof-upload-status" class="upload-status" role="status" aria-live="polite"></p>
+          <div id="proof-grid" class="owner-photo-grid"></div>
+          <p id="proof-empty" class="photo-empty">Proof images will appear here after upload.</p>
+        </section>
+
+        <section class="workbench-panel" aria-labelledby="selection-title">
+          <div class="panel-heading"><div><span class="eyebrow">03 / CLIENT PROOFING</span><h2 id="selection-title">Their photo choices.</h2><p id="selection-summary">Selections appear here after the client submits them.</p></div><span class="panel-number">03</span></div>
+          <div id="selection-state" class="selection-state"></div>
+          <div class="selection-actions"><button id="reopen-selections" class="text-button" type="button" hidden>REOPEN SELECTIONS</button></div>
+        </section>
+
+        <section class="workbench-panel" aria-labelledby="finals-title">
+          <div class="panel-heading"><div><span class="eyebrow">04 / FINAL PHOTOS</span><h2 id="finals-title">Ready for delivery.</h2><p>Final photos are downloadable by the client when you publish them.</p></div><span class="panel-number">04</span></div>
+          <div class="upload-row">
+            <label class="file-picker">ADD FINAL PHOTOS<input id="final-upload" type="file" accept="image/jpeg,image/png,image/webp,image/avif" multiple><span aria-hidden="true">+</span></label>
+            <span class="upload-help">Original files · Up to 50 MB each</span>
+          </div>
+          <p id="final-upload-status" class="upload-status" role="status" aria-live="polite"></p>
+          <div id="final-grid" class="owner-photo-grid"></div>
+          <p id="final-empty" class="photo-empty">Final images will appear here after upload.</p>
+        </section>
+
+        <section class="workbench-panel danger-panel" aria-labelledby="delete-title">
+          <div><span class="eyebrow">05 / REMOVE COLLECTION</span><h2 id="delete-title">Delete this collection.</h2><p>Client access will end and all stored photos will be permanently removed. This cannot be undone.</p></div>
+          <button id="delete-collection" class="button button-danger" type="button">DELETE COLLECTION</button>
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <dialog id="credentials-dialog" class="credentials-dialog" aria-labelledby="credentials-title">
+    <button class="close-button" type="button" data-close-dialog aria-label="Close">×</button>
+    <p class="eyebrow">PRIVATE CLIENT ACCESS</p>
+    <h2 id="credentials-title">Keep these details safe.</h2>
+    <p id="credentials-intro">Share the collection link and password through separate channels. The password will not be shown again.</p>
+    <label>PRIVATE COLLECTION LINK<div class="copy-field"><input id="credential-link" readonly><button type="button" data-copy="link">COPY LINK</button></div></label>
+    <label>COLLECTION PASSWORD<div class="copy-field"><input id="credential-password" readonly><button type="button" data-copy="password">COPY PASSWORD</button></div></label>
+    <p id="copy-status" class="form-message" role="status" aria-live="polite"></p>
+    <button class="button button-primary" type="button" data-close-dialog>DONE</button>
+  </dialog>
+
+  <dialog id="confirm-delete-dialog" class="credentials-dialog confirm-dialog" aria-labelledby="confirm-delete-title">
+    <button class="close-button" type="button" data-close-dialog aria-label="Close">×</button>
+    <p class="eyebrow">PERMANENT ACTION</p>
+    <h2 id="confirm-delete-title">Delete this collection?</h2>
+    <p>Every proof and final photo in this collection will be removed from private storage. This cannot be undone.</p>
+    <div class="form-actions"><button id="confirm-delete" class="button button-danger" type="button">DELETE PHOTOS AND COLLECTION</button><button class="text-button" type="button" data-close-dialog>CANCEL</button></div>
+  </dialog>
+
+  <dialog id="confirm-photo-dialog" class="credentials-dialog confirm-dialog" aria-labelledby="confirm-photo-title">
+    <button class="close-button" type="button" data-close-dialog aria-label="Close">×</button>
+    <p class="eyebrow">REMOVE PHOTO</p>
+    <h2 id="confirm-photo-title">Remove this image?</h2>
+    <p id="confirm-photo-name"></p>
+    <div class="form-actions"><button id="confirm-photo-delete" class="button button-danger" type="button">REMOVE PHOTO</button><button class="text-button" type="button" data-close-dialog>CANCEL</button></div>
+  </dialog>
+
+  <div class="grain" aria-hidden="true"></div>
+</body>
+</html>

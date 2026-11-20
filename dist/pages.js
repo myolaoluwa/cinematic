@@ -13,13 +13,26 @@ if(menu){
 }
 const dialog=document.createElement('dialog');
 dialog.className='page-contact';
-dialog.innerHTML='<button class="close-dialog" aria-label="Close contact">Close ×</button><span class="eyebrow">CONTACT EVAYOUNG PHOTOGRAPHY</span><h2>Let\'s talk about<br><i>your photos.</i></h2><p>Enter the email address to send your inquiry to. Your email app will open with a draft; nothing is sent from this page.</p><form><label for="page-email">RECIPIENT EMAIL</label><input id="page-email" type="email" required placeholder="Email address"><button type="submit">Create email draft ↗</button></form><a class="page-inquiry-link" hidden></a>';
+dialog.setAttribute('aria-labelledby','page-contact-title');
+dialog.innerHTML=`<button class="close-dialog" aria-label="Close contact">Close ×</button><span class="eyebrow">BOOKINGS &amp; ENQUIRIES</span><h2 id="page-contact-title">Let's talk about<br><i>your photos.</i></h2><p class="page-inquiry-context" hidden></p><form class="booking-form" action="https://formsubmit.co/ayomideayomide990@gmail.com" method="POST"><input type="hidden" name="_subject" value="New booking or enquiry — Evayoung Photography"><input type="hidden" name="_template" value="table"><input type="hidden" name="enquiry_context" value="General booking or photography enquiry"><div class="booking-honeypot" aria-hidden="true"><label>Leave this field empty<input type="text" name="_honey" tabindex="-1" autocomplete="off"></label></div><div class="booking-fields"><label class="booking-field">YOUR NAME<input type="text" name="name" autocomplete="name" required></label><label class="booking-field">EMAIL ADDRESS<input type="email" name="email" autocomplete="email" required></label><label class="booking-field">PHONE (OPTIONAL)<input type="tel" name="phone" autocomplete="tel"></label><label class="booking-field">TYPE OF PHOTOGRAPHY<select name="service_type" required><option value="" selected disabled>Choose a service</option><option>Wedding photography</option><option>Pre-wedding or couple photography</option><option>Portrait photography</option><option>Family or maternity photography</option><option>Graduation photography</option><option>Birthday or celebration photography</option><option>Event photography</option><option>Studio or lifestyle photography</option><option>Outdoor photography</option><option>Fashion, beauty or editorial photography</option><option>Other / not sure yet</option></select></label><label class="booking-field">PREFERRED DATE (OPTIONAL)<input type="date" name="preferred_date"></label><label class="booking-field">LOCATION (OPTIONAL)<input type="text" name="location" autocomplete="address-level2" placeholder="City or preferred location"></label><label class="booking-field booking-field-wide">TELL US WHAT YOU HAVE IN MIND<textarea name="message" rows="4" required placeholder="Share a few details about your plans, timing, and the photos you need."></textarea></label></div><p class="form-privacy">Your enquiry is sent via FormSubmit to Evayoung Photography. FormSubmit stores submissions for up to 30 days. Please don’t include sensitive information.</p><p class="form-status" role="status" aria-live="polite"></p><a class="form-fallback" href="mailto:ayomideayomide990@gmail.com" hidden>Email Evayoung Photography directly</a><button class="form-submit" type="submit">SEND ENQUIRY <span aria-hidden="true">↗</span></button></form>`;
 document.body.append(dialog);
 dialog.querySelector('.close-dialog').addEventListener('click',()=>dialog.close());
-dialog.querySelector('form').addEventListener('submit',event=>{
- event.preventDefault();
- const email=dialog.querySelector('input').value.trim();
- const link=dialog.querySelector('.page-inquiry-link');
- link.hidden=false;link.href=`mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent('Photography inquiry — Evayoung Photography')}`;link.textContent='Open email draft ↗';
-});
-document.querySelectorAll('.contact-trigger').forEach(button=>button.addEventListener('click',()=>dialog.showModal()));
+document.querySelectorAll('.contact-trigger').forEach(button=>button.addEventListener('click',()=>{
+ const form=dialog.querySelector('.booking-form');
+ const context=button.dataset.inquiry||'';
+ const typeField=form.elements.namedItem('service_type');
+ const lowerContext=context.toLowerCase();
+ const serviceHint=lowerContext.includes('event')?'event':
+  lowerContext.includes('wedding')||lowerContext.includes('couple')?'wedding':
+  lowerContext.includes('family')||lowerContext.includes('maternity')?'family':
+  lowerContext.includes('birthday')?'birthday':
+  lowerContext.includes('portrait')?'portrait':'';
+ const option=[...typeField.options].find(item=>serviceHint&&item.value.toLowerCase().includes(serviceHint));
+ typeField.value=option?.value||'';
+ form.elements.namedItem('enquiry_context').value=context||'General booking or photography enquiry';
+ form.elements.namedItem('_subject').value=`New ${context||'booking or enquiry'} — Evayoung Photography`;
+ const contextLabel=dialog.querySelector('.page-inquiry-context');
+ contextLabel.textContent=context||'BOOKING / GENERAL ENQUIRY';
+ contextLabel.hidden=false;
+ dialog.showModal();
+}));

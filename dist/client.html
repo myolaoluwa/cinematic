@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#151513">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <title>Private Photo Collection | Evayoung Photography</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/client.css">
+  <script src="/client.js" defer></script>
+</head>
+<body class="client-page">
+  <a class="skip-link" href="#client-main">Skip to your gallery</a>
+  <header class="client-header">
+    <a class="client-brand" href="/index.html" aria-label="Evayoung Photography home">
+      <span>Evayoung</span><span class="brand-slash">/</span><span class="brand-caption">PHOTOGRAPHY</span>
+    </a>
+    <span class="private-label"><span aria-hidden="true">●</span> PRIVATE COLLECTION</span>
+  </header>
+  <main id="client-main">
+    <section id="access-view" class="access-view" aria-labelledby="access-title">
+      <p class="eyebrow">EVAYOUNG PHOTOGRAPHY · CLIENT GALLERY</p>
+      <h1 id="access-title">Your photos,<br><i>kept private.</i></h1>
+      <p class="access-intro">Enter the password Evayoung Photography shared with you to open this collection.</p>
+      <form id="access-form" class="access-form">
+        <label for="access-password">COLLECTION PASSWORD</label>
+        <input id="access-password" name="password" type="password" autocomplete="current-password" required>
+        <p id="access-error" class="client-message" role="alert" hidden></p>
+        <button class="button button-primary" type="submit">OPEN MY COLLECTION <span aria-hidden="true">↗</span></button>
+      </form>
+      <p class="access-help">The link and password are both required. If you need help, contact Evayoung Photography.</p>
+    </section>
+
+    <section id="gallery-view" class="gallery-view" hidden aria-labelledby="gallery-title">
+      <p id="gallery-error" class="client-message gallery-error" role="status" aria-live="polite" hidden></p>
+      <div class="gallery-heading">
+        <p class="eyebrow">A PRIVATE COLLECTION · EVAYOUNG PHOTOGRAPHY</p>
+        <h1 id="gallery-title">Your photos.</h1>
+        <p id="gallery-client" class="gallery-client"></p>
+        <p id="gallery-expiry" class="gallery-expiry"></p>
+      </div>
+
+      <section id="proof-section" class="client-section" aria-labelledby="proof-heading">
+        <div class="section-heading">
+          <div><span class="eyebrow">01 / PHOTO PROOFS</span><h2 id="proof-heading">Choose the ones <i>you love.</i></h2></div>
+          <span id="selection-counter" class="selection-counter"></span>
+        </div>
+        <p id="proof-instructions" class="section-intro"></p>
+        <div id="proof-gallery" class="client-photo-grid"></div>
+        <div id="selection-submit-area" class="submit-area" hidden>
+          <p id="selection-submit-note">You can change your choices until you submit. After that, your selections are locked.</p>
+          <button id="submit-selections" class="button button-primary" type="button">SEND MY PHOTO CHOICES <span aria-hidden="true">↗</span></button>
+        </div>
+        <div id="selection-complete" class="selection-complete" hidden>
+          <span class="complete-mark" aria-hidden="true">✓</span>
+          <div><strong>Your choices have been sent.</strong><p>Need to make a change? Contact Evayoung Photography.</p></div>
+        </div>
+      </section>
+
+      <section id="final-section" class="client-section final-section" aria-labelledby="final-heading" hidden>
+        <div class="section-heading">
+          <div><span class="eyebrow">02 / FINAL PHOTOS</span><h2 id="final-heading">Ready to <i>download.</i></h2></div>
+          <span id="final-count" class="selection-counter"></span>
+        </div>
+        <p class="section-intro">These finished photos are yours to download. If a download link expires, refresh this page to get a new one.</p>
+        <div id="final-gallery" class="client-photo-grid final-grid"></div>
+      </section>
+      <footer class="client-footer"><span>EVAYOUNG PHOTOGRAPHY</span><button id="client-logout" class="text-button" type="button">CLOSE PRIVATE GALLERY</button></footer>
+    </section>
+  </main>
+
+  <dialog id="submit-dialog" class="submit-dialog" aria-labelledby="submit-dialog-title">
+    <button class="close-button" type="button" data-close-dialog aria-label="Close">×</button>
+    <p class="eyebrow">FINAL CHECK</p>
+    <h2 id="submit-dialog-title">Send these choices?</h2>
+    <p>Once submitted, you won’t be able to change your selections unless Evayoung Photography reopens them.</p>
+    <div class="dialog-actions"><button id="confirm-submit" class="button button-primary" type="button">SEND MY CHOICES <span aria-hidden="true">↗</span></button><button class="text-button" type="button" data-close-dialog>GO BACK</button></div>
+  </dialog>
+</body>
+</html>
